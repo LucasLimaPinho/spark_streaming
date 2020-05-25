@@ -2,6 +2,7 @@ APACHE SPARK: Por padrão, persiste os dados apenas em memória.
 Estrutura principal de dados: Resilient Distributed Dataset (RDD).
 Opera em modos standalone e modo cluster (compatível com YARN).
 Spark pode ser até 100x mais rápido que operação em batch do hadoop - verificar capacidade de memória disp.
+Spark define automaticamente o número de execuções paralelas. Podemos em uma transformação customizar a quantidade de execuções paralelas.
 Spark Streaming: micro-batches.
 Python: pyspark
 
