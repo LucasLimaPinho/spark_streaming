@@ -83,5 +83,24 @@ hdfs dfs -cat /user/cloudera/conta/part-00000
 sudo hdfs dfs -rm -r /user/cloudera/conta
 
 
+# Conexão Spark -> Hive
 
-
+ls /usr/lib/hive/conf/hive-site.xml
+cat /usr/lib/hive/conf/hive-site.xml
+# copiar esse arquivo para dentro da pasta de arquivo de configuração do spark
+sudo cp /usr/lib/hive/conf/hive-site.xml /usr/lib/spark/conf
+pyspark
+from pyspark.sql import HiveContext
+contexto_hive = HiveContext(sc)
+banco = contexto_hive.table("ed.sales")
+banco.show()
+banco.registerTempTable("sales")
+contexto_hive.sql("select * from sales").show()
+contexto_hive.sql("select sum(valortotal) from sales").show()
+vendas = contexto_hive.sql("select * from sales")
+vendas.show(100)
+vendas.printSchema()
+vendas.select('estado','status').show()
+vendas.select('estado','status').distinct().show(30)
+vendas.filter(vendas.estado=='RS').show()
+vendas.filter(vendas.estado=='RS').count()
