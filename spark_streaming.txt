@@ -6,7 +6,8 @@
 # Fontes básicas de Stream (sem precisar importar bibliotecas): Pastas e conexão TCP
 # Fontes avançadas de Stream: precisam de bibliotecas extras, ex: Flume
 
-spark-submit /home/cloudera/exemplo.py 
+# ESCREVENDO APLICAÇÃO EM PYTHON 'AplicaçãoSpark.py'
+
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
 
@@ -48,3 +49,6 @@ ssc.start()
 # A aplicação de Streaming irá terminar quando ocorrer algum erro ou ctrl+c no console
 
 ssc.awaitTermination()  
+
+# RODANDO APLICAÇÃO NO SHELL DO LINUX
+spark-submit /home/cloudera/AplicaçãoSpark.py 
