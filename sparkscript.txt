@@ -1,6 +1,66 @@
+pyspark
+sc
+
+# Variável de contexto (SparkContext) faz a conexão do Shell com cluster do Spark.
+
+# Exemplos de ações: geram resultado em console
+
+numeros = sc.parallelize([1,2,3,4,5,6,7,8,9,10])
+numeros2 = sc.parallelize([6,7,8,9,10])
+numeros.first()
+numeros.top(3)
+numeros.take(5)
+numeros.collect() # todos elementos do RDD
+numeros.stdev()
+
+# Spark não persiste de forma padrão.
+
+numeros.persist(StorageLevel.MEMORY_ONLY)
+numeros.unpersist()
+
+# Exemplo de transformação: gera outra RDD
+
+filtro = numeros.filter(lambda filtro:filtro>2)
+filtro.collect()
+sample = numeros.sample(True, 0.5, 1)
+sample.collect()
+mult = numeros.map(lambda mult:mult*2)
+mult.collect()
+union = numeros.union(numeros2)
+union.collect()
+intersec = numeros.intersection(numeros2)
+intersec.collect()
+subtrai = numeros.subtract(numeros2)
+subtrai.collect()
+produto_cartesiano = numeros.cartesian(numeros2)
+produto_cartesiano.collect() # Gera conjunto chave-valor
 
 
-#carrega arquivo texto - lazy evaluation - só carrega quando necessário
+# Operações em Spark sobre chave-valor
+# Objeto compras gerado com contexto SparkContext e método parallelize
+# Objeto com estrutura chave-valor
+
+
+sales = sc.parallelize([(1,200), (2,200), (3,120), (4,250), (5,78)])
+debitos = sc.parallelize([(1,20), (2,300)])
+chaves = sales.keys()
+chaves.collect()
+values = sales.values()
+values.collect()
+sales.countByKey()
+soma = sales.mapValues(lambda soma:soma+1)
+soma.collect()
+agrupa = compras.groupByKey().mapValues(list)
+agrupa.collect()
+resultado = compras.join(debitos) #inner join
+resultado.collect()
+semdebito = compras.subtractByKey(debitos)
+semdebito.collect()
+
+# Carrega arquivo texto - lazy evaluation - só carrega quando necessário
+# Utiliza contexto SparkContext com método textFile
+# Realizar WordCount no hadoop com elevado nível de abstração sem ter que rodar arquivo .jar compilado
+
 pesquisa = sc.textFile("file:///home/cloudera/Downloads/pesquisa.txt")
 pesquisa.take(5)
 
@@ -14,18 +74,12 @@ contagem
 
 
 contagem.take(5)
-
-
-#salva como arquivo sequencial - diretorio onde salva
-#ele não pode existir!
 contagem.saveAsTextFile("conta")
 
 quit()
 
 hdfs dfs -ls /user/cloudera/conta/
 hdfs dfs -cat /user/cloudera/conta/part-00000
-
-#excluir diretorio
 sudo hdfs dfs -rm -r /user/cloudera/conta
 
 
