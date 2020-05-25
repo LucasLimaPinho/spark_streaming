@@ -1,6 +1,6 @@
 
 
-#carrega arquivo texto - lazy evaluation - so carrega quando necess·rio
+#carrega arquivo texto - lazy evaluation - s√≥ carrega quando necess√°rio
 pesquisa = sc.textFile("file:///home/cloudera/Downloads/pesquisa.txt")
 pesquisa.take(5)
 
@@ -17,7 +17,7 @@ contagem.take(5)
 
 
 #salva como arquivo sequencial - diretorio onde salva
-#ele n„o pode existir!
+#ele n√£o pode existir!
 contagem.saveAsTextFile("conta")
 
 quit()
