@@ -16,5 +16,9 @@ RDD - Resilient Distributed Datasets
 
   Dados imutáveis distribuídos pelos clusters: Operações sobre RDD criam novo RDD. Passa a trabalhar com outro RDD após transformação.
   Em RAM podendo ser persistido em disco
+  São recalculados a cada operação, não sendo persistidos em memória - arquitetura pensada para grande qtd. dados
+  Para reuso, usar função RDD.persist()
+  Lazy Evaluation
+  Ações: cálculos exibidos no console
   
 
