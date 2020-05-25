@@ -3,6 +3,7 @@ Estrutura principal de dados: Resilient Distributed Dataset (RDD).
 Opera em modos standalone e modo cluster (compatível com YARN).
 Spark pode ser até 100x mais rápido que operação em batch do hadoop - verificar capacidade de memória disp.
 Spark Streaming: micro-batches.
+Python: pyspark
 
   Core: gestão de recursos, tolerância a falha
   SQL: querys por linguagem SQL com suporte a Hive
