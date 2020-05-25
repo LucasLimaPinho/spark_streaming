@@ -12,7 +12,7 @@ from pyspark.streaming import StreamingContext
 
 # Define o contexto da aplicação com threads e nome:
 
-sc = SparkContext("local[2]", "Contagem")
+sc = SparkContext("local[2]", "WordCount")
 
 # Contexto de Streaming e Tempo de Intervalo dos Micro-Batches em segundos. No caso abaixo, 10 segundos para observar funcionamento.
 
@@ -44,5 +44,7 @@ contagem.pprint()
 ssc.start()             
 
 # Aguarda Encerramento
+
+# A aplicação de Streaming irá terminar quando ocorrer algum erro ou ctrl+c no console
 
 ssc.awaitTermination()  
