@@ -1,0 +1,48 @@
+# DStream -> representação interna do stream
+# Composto por RDD's contínuos
+# Cada RDD possui dados de um intervalo de tempo
+# A aplicação Spark Streaming é rodada em linha de comando após ser desenvolvida
+
+# Fontes básicas de Stream (sem precisar importar bibliotecas): Pastas e conexão TCP
+# Fontes avançadas de Stream: precisam de bibliotecas extras, ex: Flume
+
+spark-submit /home/cloudera/exemplo.py 
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+
+# Define o contexto da aplicação com threads e nome:
+
+sc = SparkContext("local[2]", "Contagem")
+
+# Contexto de Streaming e Tempo de Intervalo dos Micro-Batches em segundos. No caso abaixo, 10 segundos para observar funcionamento.
+
+ssc = StreamingContext(sc, 10)
+
+# Pasta a monitorar - define a fonte de dados
+# textFileStream -> arquivo a ser processado em streaming de micro-batches é lido de diretório
+# Um mesmo arquivo não é lido novamente, mesmo que modificado
+# Deve ser incluído novo arquivo ou renomeado
+
+pesquisa = ssc.textFileStream("file:///home/cloudera/spark/")
+
+###### AQUI APLICA AS TRANSFORMAÇÕES ###########################
+# Contagem
+
+contagem = pesquisa.flatMap(lambda palavra: palavra.split(" ")) 
+contagem = contagem.map(lambda pal: (pal, 1)) 
+contagem = contagem.reduceByKey(lambda a, b: a + b)
+
+
+###### AQUI ENCERRA TRANSFORMAÇÕES  #############################
+
+# Print
+
+contagem.pprint()
+
+# Inicia Processamento
+
+ssc.start()             
+
+# Aguarda Encerramento
+
+ssc.awaitTermination()  
